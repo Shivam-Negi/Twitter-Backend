@@ -18,26 +18,29 @@ class HashtagRepository extends CrudRepository{
     }
 
     async bulkCreate(data) {
+        console.log("inside bulk create data is : ", data);
         try {
             const tags = await Hashtag.insertMany(data);
             return tags;
         } catch (error) {
-            console.log(error);
+        //    console.log(error);
             throw error;
         }
     }
 
-    async getHashtagByName(text) {
+    async getHashtagByName(tags) {
         try {
-            let hashtag = await Hashtag.find({
-                text: text,
-            });
-            return hashtag;
+          let hashtags = await Hashtag.find({ 
+            text: { $in: tags } 
+        });
+        //   console.log(hashtags);
+          return hashtags;
         } catch (error) {
-            console.log(error);
-            throw error;
+          console.log(error);
+          throw error;
         }
-    }
+      }
+      
 
     async getHashtag(id) {
         try {
